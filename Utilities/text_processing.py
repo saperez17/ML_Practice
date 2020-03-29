@@ -108,3 +108,15 @@ class TextDataPipeline:
 
     def create_evaluation_data(self):
         pass
+
+#usage
+    #1st:Read .csv file
+data = pd.read_csv("reddit_comments.csv", sep=',', nrows=50000)
+data = data.dropna(subset=['body']).reset_index()
+data = data.drop(columns=['index'], axis=0)
+    #2nd: Use PreprocessData class
+np.random.seed(10)
+pdObj = PreprocessData(data.body, vocabulary_size=8000)
+txt_data = pdObj.remove_nan()
+txt_data = pdObj.tokenize_sentence()
+txt_data = pdObj.tokenize_word()
